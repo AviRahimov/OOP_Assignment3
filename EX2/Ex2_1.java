@@ -20,7 +20,13 @@ public class Ex2_1 {
         Random rand = new Random(seed);
         for (int i = 0; i < n; i++) {
             int x = rand.nextInt(bound);
-            FileWriter file = new FileWriter("file" + i);
+            File file = new File("file" + i);
+            PrintWriter out = new PrintWriter(file);
+            for (int j = 0; j < x; j++) {
+                out.println("Hello World" + i);
+            }
+            out.close();
+            files[i] = file.getName();
         }
         return files;
     }
@@ -31,7 +37,7 @@ public class Ex2_1 {
      * @return
      * @throws IOException
      */
-    public static int getNumOfLines(String[] fileNames) throws IOException {
+    public int getNumOfLines(String[] fileNames) throws IOException {
         int count_lines = 0;
         for(String file_name : fileNames){
             Path file = Paths.get(file_name);
@@ -45,16 +51,24 @@ public class Ex2_1 {
      * @param fileNames
      * @return
      */
-//    public int getNumOfLinesThreads(String[] fileNames){
-//     Thread_NumOfLines thread_lines = new Thread_NumOfLines();
-//    }
+    public int getNumOfLinesThreads(String[] fileNames){
+        int count = 0;
+        for (String files : fileNames){
+            Thread_NumOfLines thread_lines = new Thread_NumOfLines(files);
+            thread_lines.setPriority(10);
+            thread_lines.run();
+            count+=Thread_NumOfLines.count_lines;
+        }
+        return count;
+    }
 
     /**
      *
      * @param fileNames
      * @return
      */
-//    public int getNumOfLinesThreadPool(String[] fileNames){
-//
-//    }
+    public static int getNumOfLinesThreadPool(String[] fileNames){
+        int count = 0;
+        return count;
+    }
 }
