@@ -1,4 +1,3 @@
-import java.io.*; // importing BufferReader
 import java.nio.file.*; // importing Path and Paths
 
 /**
@@ -27,7 +26,7 @@ public class Thread_NumOfLines extends Thread {
     public int getTotal() {
         return total;
     }
-    
+
     /**
      * standard constructor method that gets a file name
      * @param fileName - the name of the file
@@ -41,15 +40,9 @@ public class Thread_NumOfLines extends Thread {
      */
     @Override
     public void run() {
-        int numLines = 0;
         Path file = Paths.get(this.name);
         try {
-            BufferedReader reader = Files.newBufferedReader(file);
-            while (reader.readLine() != null) {
-                numLines++;
-            }
-            reader.close();
-            total += numLines;
+            total += Files.lines(file).count();
         } catch (Exception e) {
             e.printStackTrace();
         }
