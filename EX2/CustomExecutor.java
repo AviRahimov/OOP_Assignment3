@@ -5,17 +5,13 @@ import java.util.concurrent.*;
  * the section 1 to a priority queue, and a method for submitting a generic task created by a
  * Callable<V> and a Type, passed as arguments.
  */
-public class CustomExecutor{
-    private final PriorityBlockingQueue<Runnable> task_queue;
-    private final int MinNumOfThreads;
-    private final int MaxNumOfThreads;
+public class CustomExecutor extends ThreadPoolExecutor{
+    private static final PriorityBlockingQueue<Runnable> task_queue = new PriorityBlockingQueue<>();
+    private static final int MinNumOfThreads = (Runtime.getRuntime().availableProcessors())/2;
+    private static final int MaxNumOfThreads = (Runtime.getRuntime().availableProcessors())-1;
     private int CurrentMaxPriority;
-    private final ThreadPoolExecutor executor;
     public CustomExecutor(){
-        this.task_queue = new PriorityBlockingQueue<>();
-        this.MinNumOfThreads = (Runtime.getRuntime().availableProcessors())/2;
-        this.MaxNumOfThreads = (Runtime.getRuntime().availableProcessors())-1;
-        this.executor = new ThreadPoolExecutor(MinNumOfThreads, MaxNumOfThreads, 300, TimeUnit.MILLISECONDS, task_queue);
+        super(MinNumOfThreads, MaxNumOfThreads, 300, TimeUnit.MILLISECONDS, task_queue);
     }
 
     /**
@@ -32,30 +28,32 @@ public class CustomExecutor{
      * the executor.
      */
     public void gracefullyTerminate(){
-        executor.shutdown();
+        super.shutdown();
     }
 
     /**
      *
-     * @param task representing the task that the executor need to execute.
+     * @param callable representing the task that the executor need to execute.
      * @return Future data type that hold the result of the submission method and, when we write Future.get() it will
      * return the output of the result.
      * @param <V> a generic data type that will be return at the end of the task submission
      */
     public <V> Future<V> submit(Task<V> task){
+        if (task == null){
+            throw new NullPointerException();
+        }
         this.CurrentMaxPriority = task.getPrior();
-        return executor.submit(task);
+        return super.submit(task);
     }
 
     /**
-     *
      * @param callable the callable operation that we want to execute.
      * @param taskType the task type(priority) of the task that will be added to the method.
      * @return a Future representing pending completion of the task by sending it to the first submit method.
      */
-    public <V> Future<V> submit(Callable<V> callable, TaskType taskType){
+    public <V> Future submit(Callable<V> callable, TaskType taskType){
 
-        return this.submit(Task.createTask(callable, taskType));
+        return super.submit(Task.createTask(callable, taskType));
     }
 
     /**
