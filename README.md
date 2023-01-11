@@ -1,6 +1,8 @@
 # Object Oriented Programming - Third(2) Assignment
 
-Authors: Avraham Rahimov & Lior Vinman
+Authors:
+* [Lior Vinman](https://github.com/liorvi35 "Lior Vinman")
+* [Avraham Rahimov](https://github.com/AviRahimov "Avraham Rahimov")
 
 This project is about using system's _threads_ for various usages such as processing files and count how many lines there are in a singe file and [AVI RAHIMOV - add here about usages of threads in part2].
 
