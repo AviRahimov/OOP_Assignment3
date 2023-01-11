@@ -9,7 +9,7 @@ import java.util.concurrent.*;
  * @author Lior Vinman, Avraham Rahimov
  * @version 13 January 2023
  */
-public class EX2_1 {
+public class Ex2_1 {
 
     /**
      * this function creates files
@@ -84,7 +84,7 @@ public class EX2_1 {
         for(String file : fileNames) {
             Thread_NumOfLines th = new Thread_NumOfLines(file);
             th.run();
-            numLines = th.getTotal();
+            numLines += th.getTotal();
         }
         return numLines;
     }
