@@ -8,7 +8,7 @@ import java.util.concurrent.Callable; // importing Callable interface
  * this class is a helper-class that implements JAVA's callable interface
  * used of counting number of lines inside of file using thread pool
  * @author Lior Vinman, Avraham Rahimov
- * @version 10 January 2023
+ * @version 13 January 2023
  */
 public class ThreadPool_NumOfLines implements Callable<Integer> {
 
