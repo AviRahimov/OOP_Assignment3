@@ -75,8 +75,18 @@ class doesn't have written constructor but there is a default constructor that i
 **Class Functions:**
 1) `public static boolean CalculateRunningTime(int, int, int)` - this function takes as arguments three integers: n, seed, bound - for the first function in `Ex2_1`, it creates n files with bound and seed random number of lines and then calling each function 3,4,5 and calculating running time of each of them, at the end - it prints the results and returns true on success, if error accuses it prints error message and returns false.
 
-now let's discuss running timings of those function and see what is the best approach, We performed four experiments, we will present the results and explain them:<br/>
+now let's discuss running timings of those function and see what is the best approach, We performed four experiments, we will present the results and explain them:<br/><br/>
+input: (n,seed,bound) = 100-100-1000
 ![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100-100-1000.jpg)
+<br/><br/>
+input: (n,seed,bound) = 1000-100-1000
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/1000-100-1000.jpg)
+<br/><br/>
+input: (n,seed,bound) = 10000-100-1000
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/10000-100-1000.jpg)
+<br/><br/>
+input: (n,seed,bound) = 100000-100-1000
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100000-100-1000.jpg)
 
 
 
