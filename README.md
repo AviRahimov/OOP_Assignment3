@@ -118,8 +118,7 @@ We buikd two different constructors:
 ### FutureToRunAdapter:
 
 ## UML-Diagram:
-** UML for Part B: **
-![image](https://user-images.githubusercontent.com/98770917/211952123-c4a876db-3377-402f-95fa-3526a121d7ca.png)
+![UML_Part_B](https://user-images.githubusercontent.com/98770917/211952123-c4a876db-3377-402f-95fa-3526a121d7ca.png)
 
 
 ## How to use
