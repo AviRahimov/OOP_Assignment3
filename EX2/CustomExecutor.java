@@ -20,16 +20,16 @@ public class CustomExecutor extends ThreadPoolExecutor{
     }
     /**
      * @param task representing the task that the executor need to execute.
-     * @param <V>      a generic data type that will be return at the end of the task submission
+     * @param <V> a generic data type that will be return at the end of the task submission
      * @return Future data type that hold the result of the submission method and, when we write Future.get() it will
      * return the output of the result.
      */
-    public <V> FutureToRunAdapter submit(Task<V> task){
+    public <V> Future submit(Task<V> task){
         try {
             TasksPriority[task.getPrior()-1]++;
-            FutureToRunAdapter futureToRunAdapter = new FutureToRunAdapter(task, task.getPrior());
-            super.execute(futureToRunAdapter);
-            return futureToRunAdapter;
+            CallToRunAdapter callToRunAdapter = new CallToRunAdapter(task, task.getPrior());
+            super.execute(callToRunAdapter);
+            return callToRunAdapter;
         }
         catch (Exception NullPointerException){
             throw NullPointerException;
@@ -55,10 +55,18 @@ public class CustomExecutor extends ThreadPoolExecutor{
     public <V> Future<V> submit(Callable<V> callable){
         return this.submit(new Task<>(callable));
     }
+
+    /**
+     * These can be used to
+     * manipulate the execution environment.
+     * for example, reinitializing ThreadLocals, gathering statistics, or adding log entries.
+     * @param thread the thread that will run task {@code r}
+     * @param runnable the task that will be executed
+     */
     @Override
     public void beforeExecute(Thread thread, Runnable runnable){
         try {
-            TasksPriority[((FutureToRunAdapter<?>)runnable).getPrior()-1]--;
+            TasksPriority[((CallToRunAdapter<?>)runnable).getPrior()-1]--;
         } catch (Exception e) {
             throw new NullPointerException("You are trying to access null object!!!");
         }
@@ -81,24 +89,23 @@ public class CustomExecutor extends ThreadPoolExecutor{
 
     /**
      *
-     * @return the maximum priority in the queue in O(1) time & space
+     * @return the maximum priority in the queue in O(1) time & space because we run over the Lowest priority that
+     * it's 10 as default the O(10)=O(1) in time complexity.
      * complexity.
      */
     public int getCurrentMax(){
-//        for(int i : TasksPriority){
-//            if(i>0)
-//                return (i);
-//        }
         for (int i = 0; i < LowestPriority; i++) {
             if(this.TasksPriority[i]>0)
                 return i+1;
         }
-        return LowestPriority;
+        return 0;
     }
 
     /**
-     * After finishing of all tasks submitted to the executor, or if an exception is thrown, terminate
-     * the executor.
+     * After finishing of all tasks submitted to the executor, or if an exception is thrown, wait
+     * the alive time of the idle thread multiplying by the task priority length.
+     * we used this time because we want to illustrate the KeepAliveTime method, in our assignment we need to set
+     * the KeepAliveTime to 0.3 seconds so, we set it for every cell in the task priority.
      */
     public void gracefullyTerminate(){
         try {

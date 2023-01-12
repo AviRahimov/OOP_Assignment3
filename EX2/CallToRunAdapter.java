@@ -2,10 +2,16 @@ import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
-public class FutureToRunAdapter<T> extends FutureTask<T> implements Comparable<FutureToRunAdapter> {
-
+/**
+ *
+ * @param <T> a generic class that adapt a callable type to a runnable type because when we use the execute method
+ *            we need to pass into it a runnable type but the task is a caalable then, we need an adapter that will
+ *           "convert" the callable type to a runnable.
+ */
+public class CallToRunAdapter<T> extends FutureTask<T> implements Comparable<CallToRunAdapter> {
+    // the prior variable representing the priority of the current task.
     private int prior;
-    public FutureToRunAdapter(Callable<T> operation, int prior){
+    public CallToRunAdapter(Callable<T> operation, int prior){
         super(operation);
         this.prior = prior;
     }
@@ -18,7 +24,7 @@ public class FutureToRunAdapter<T> extends FutureTask<T> implements Comparable<F
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FutureToRunAdapter<?> that = (FutureToRunAdapter<?>) o;
+        CallToRunAdapter<?> that = (CallToRunAdapter<?>) o;
         return prior == that.prior;
     }
     @Override
@@ -34,7 +40,7 @@ public class FutureToRunAdapter<T> extends FutureTask<T> implements Comparable<F
     }
 
     @Override
-    public int compareTo(FutureToRunAdapter o) {
+    public int compareTo(CallToRunAdapter o) {
         return Integer.compare(this.prior, o.prior);
     }
 }
