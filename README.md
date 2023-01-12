@@ -134,7 +134,7 @@ there is defultive constructor that is extended (using _"super()"_) from `Thread
 
 **Class Methods:**
 
-1) `public <V> FutureToRunAdapter submit(Task<V>)` - converts from `Future` to `Runnable`.
+1) `public <V> CallToRunAdapter submit(Task<V>)` - converts from `Future` to `Runnable`.
 2) `public <V> Future submit(Callable<V>, TaskType)` - creates a new task.
 3) `public <V> Future<V> submit(Callable<V>)` - submits a new task.
 4) `public void beforeExecute(Thread, Runnable)` - updates priority of the task before executing it.
@@ -145,7 +145,7 @@ there is defultive constructor that is extended (using _"super()"_) from `Thread
 9) `public String toString()` - standard _"toString()"_ method.
 
 
-### FutureToRunAdapter:
+### CallToRunAdapter:
 
 **Class Fields:**
 
