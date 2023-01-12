@@ -79,7 +79,42 @@ as we can see, using `public static int getNumOfLinesThreads(String[])` is the b
 ### Explenations:
 as we saw at the results, using only single thread(s) is the best option to get lowest running times - the reason for that may be that if the system (JVM) using only one thread each time to calculate so every thread has more system reasurses such as CPU speed (in Ghz) or more Ram memmory available (in GB) and thus every thread can "finish his job" faster, what about threadpool and manually calculating (without any threads) - if we'll look at the 100,000 files results there we'll see that the threadpool is the worst option but if we'll loot at the 100 files results we'll see that the manuall option is the worst, the reason for that may be that if we have too many files (tasks) and too many threads that are "doing their jobs" simulltanly - so its logical that every thread will get less system resources (because ours home-computers has limited resoures, at the end...) and the reasong for the changing (that threadpool is better in one case but no the best at other case) is that the running time may depend on the diffculty to calculate many times at the same time and as we can see at some cases manuall is better than threadpool.  
 
+## Part B:
+
+There are 4 classes in this part and we will explain all the classes.
+
+### TaskType:
+Enum class that representing 3 different priorities for some task for example:
+** priority number 1: ** Computational task
+** priority number 2: ** IO-Bound Task
+** priority number 3: ** Unknown Task
+
+this is a definition for some tasks but, the priorities for the tasks can be between 1-10 such that 10 us the lowest priority and is the greatest.
+
+### Task:
+**Class Fields:**
+1) `Callable<T> operation` - this type is a callable task that the thread execute, Callable is used for Threadpool and not for single thread because if we using a single thread then we need to use the Runnable interface and not the Callable, we are going to talk about the Callable and the Runnable interfaces later when we talk about the adapter class.
+2) `TaskType type` - the task type like compu..., IO, etc.
+
+**Object's Constructor:**
+We buikd two different constructors:
+1) A private constructor that takes as an arguments Callable operation and a task type.
+2) The second constructor is public and it's take a Callable operation as an argument.
+
+**Class Functions:**
+1) `createTask` - create a new task with a task type by calling the private constructor.
+2) `createTask` - create a new task by calling the public constructor.
+3) `call` - Computes a result, or throws an exception if unable to do so. return a generic type that represent the computed result.
+4) `compareTo` - comparing between two different tasks by their priorities.
+5) `getPrior` - getting the current task priority.
+
+### CustomExecutor:
+
+### FutureToRunAdapter:
+
 ## UML-Diagram:
+** UML for Part B: **
+![image](https://user-images.githubusercontent.com/98770917/211952123-c4a876db-3377-402f-95fa-3526a121d7ca.png)
 
 
 ## How to use
