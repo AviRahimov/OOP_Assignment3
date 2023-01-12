@@ -143,6 +143,24 @@ there is defultive constructor that is extended (using _"super()"_) from `Thread
 
 ### FutureToRunAdapter:
 
+**Class Fields:**
+
+1) `private int prior` - priority holder.
+
+
+**Object's Constructor:**
+
+there is defultive constructor that is extended (using _"super()"_) from `FutureTask<T>` that takes as arguments `Callable<T>` ant `int`.
+
+
+**Class Methods:**
+
+1) `public int getPrior()` - standard _"getter()"_ for first field. 
+2) `public boolean equals(Object)` - checking if two objects are equal.
+3) `puvlic string toString()` - standard _"toString()"_ method.
+4) `public int hashCode()` - returning the hash code of the current object.
+5) `public int compareTo(FutureToRunAdapter)` - checking if priority of two objects are the same.
+
 ## UML-Diagram:
 ![UML_Part_B](https://user-images.githubusercontent.com/98770917/211952123-c4a876db-3377-402f-95fa-3526a121d7ca.png)
 
