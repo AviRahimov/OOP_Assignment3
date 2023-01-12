@@ -89,8 +89,8 @@ as we saw at the results, using only single thread(s) is the best option to get 
 as we can see at this diagram, the class `Ex2_1` uses the classes `Thread_NumOfLines` and `ThreadPool_NumOfLines`, in other words, there is a dependency between them. In addition, we can see that `ThreadPool_NumOfLines` implements the `Callable<V>` interface and the `Thread_NumOfLines` is extends (inheritance) JAVA's `Thread` which also is extending `Runnable` interface.
 
 * white arrows = one directional dependency
-* <span style="color:blue;">blue arrows</span> = one directional inheritance
-* <span style="color:green;">green arrows</span> = one directional implementation
+* <font color="blue">blue</font> arrows = one directional inheritance
+* <font color="green">green</font> arrows = one directional implementation
 
 ## Part B:
 
