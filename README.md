@@ -29,6 +29,7 @@ class doesn't have written constructor but there is a default constructor that i
 3) `public static int getNumOfLines(String[])` - this function takes as argument a string array that contains filenames, the function is counting and returning the total number of lines in all files - it counts manually.
 4) `public static int getNumOfLinesThreads(String[])` - this function takes as argument a string array that contains filenames, the function is also counting the total number of lines for each file, but now using (new) thread for each file.
 5) `public static int getNumOfLinesThreadPool(String[])` - .this function takes as argument a string array that contains filenames, this function (third in a row!) is counting the total number of lines in all files but now using thread pool.
+6) `public static boolean CalculateRunningTime(int, int, int)` - this function takes as arguments three integers: n, seed, bound - for the first function in `Ex2_1`, it creates n files with bound and seed random number of lines and then calling each function 3,4,5 and calculating running time of each of them, at the end - it prints the results and returns true on success, if error accuses it prints error message and returns false.
 
 ### Thread_NumOfLines:
 this class is a helper class for performing fourth function from `Ex2_1` it extends JAVA's `Thread`.
@@ -61,33 +62,24 @@ There is a constructor that receives a string name to set the name of the file.
 1) `public Integer call()` - this method is counting number of lines in single file using thread-pool.
 
 ## Timings
-in this part of the assignment one of the purposes of the same usage of 3,4,5 functions in `Ex2_1` is comparing running time and deciding which approach is better, for that we created another helper-class.
+in this part of the assignment one of the purposes of the same usage of 3,4,5 functions in `Ex2_1` is comparing running time and deciding which approach is better., 
+let's discuss running timings of those function and see what is the best approach, We performed four experiments, we will present the results and explain them<br/<br/>
 
-### RunningTime:
-this class is helper-class for calculating and comparing the running time of functions 3,4,5. usage: `RunningTime.CalculateRunningTime(int, int, int)` in yours main function.
-
-**Class Fields:**
-class have no fields !
-
-**Object's Constructor:**
-class doesn't have written constructor but there is a default constructor that inherited from `Object()`.
-
-**Class Functions:**
-1) `public static boolean CalculateRunningTime(int, int, int)` - this function takes as arguments three integers: n, seed, bound - for the first function in `Ex2_1`, it creates n files with bound and seed random number of lines and then calling each function 3,4,5 and calculating running time of each of them, at the end - it prints the results and returns true on success, if error accuses it prints error message and returns false.
-
-now let's discuss running timings of those function and see what is the best approach, We performed four experiments, we will present the results and explain them:<br/><br/>
 input: (n,seed,bound) = 100-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100-100-1000.jpg)
-<br/><br/>
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100-100-1000.jpg)<br/><br/>
 input: (n,seed,bound) = 1000-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/1000-100-1000.jpg)
-<br/><br/>
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/1000-100-1000.jpg)<br/><br/>
 input: (n,seed,bound) = 10000-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/10000-100-1000.jpg)
-<br/><br/>
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/10000-100-1000.jpg)<br/><br/>
 input: (n,seed,bound) = 100000-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100000-100-1000.jpg)
+![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100000-100-1000.jpg)<br/>
 
+as we can see, using `public static int getNumOfLinesThreads(String[])` is the best option, because of the lowers running times in all four expiriments. what about the second and the third places, we don't have a decisive answer - because at 100,000 files the threadpool is the worst option but in 100 files regular calculation is the worst.
+
+### Explenations:
+as we saw at the results, using only single thread(s) is the best option to get lowest running times - the reason for that may be that if the system (JVM) using only one thread each time to calculate so every thread has more system reasurses such as CPU speed (in Ghz) or more Ram memmory available (in GB) and thus every thread can "finish his job" faster, what about threadpool and manually calculating (without any threads) - if we'll look at the 100,000 files results there we'll see that the threadpool is the worst option but if we'll loot at the 100 files results we'll see that the manuall option is the worst, the reason for that may be that if we have too many files (tasks) and too many threads that are "doing their jobs" simulltanly - so its logical that every thread will get less system resources (because ours home-computers has limited resoures, at the end...) and the reasong for the changing (that threadpool is better in one case but no the best at other case) is that the running time may depend on the diffculty to calculate many times at the same time and as we can see at some cases manuall is better than threadpool.  
+
+## UML-Diagram:
 
 
 ## How to use
