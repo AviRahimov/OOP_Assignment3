@@ -4,12 +4,16 @@ Authors:
 * [Lior Vinman](https://github.com/liorvi35 "Lior Vinman")
 * [Avraham Rahimov](https://github.com/AviRahimov "Avraham Rahimov")
 
-This project is about using system's _threads_ for various usages such as processing files and count how many lines there are in a singe file and [AVI RAHIMOV - add here about usages of threads in part2].
+This project is about using system's _threads_ for various usages such as processing files and count how many lines there are in a singe file and A custom thread pool class that defines a method for submitting a generic task as described in 
+the section 1 to a priority queue, and a method for submitting a generic task created by a 
+Callable<V> and a Type, passed as arguments.
 
 
 This assignment is divided into two pats:
 1) the first part - mainly is about generating semi-random text files with random number of lines and then calculate this number of lines with three approaches - counting one by one, using threads and finally using thread-pools. 
-2) the second part - [AVI RAHIMOV - describe here about second part].
+2) the second part - The CustomExecutor is an Executor that asynchronously computes Task instances, each Task has a priority that describes the importance of task over the others.
+the priorities can be between 1-10 such that 10 is the lower priority and 1 is the very important task.
+We also added a new class named CallToRunAdapter that adapts the task to runnable command that we can execute it(the execute functions get a runnable command only).
 
 ## Part A:
 
@@ -145,12 +149,12 @@ there is defultive constructor that is extended (using _"super()"_) from `Thread
 
 **Class Fields:**
 
-1) `private int prior` - priority holder.
+1) `private int prior` - the priority of the current task.
 
 
 **Object's Constructor:**
 
-there is defultive constructor that is extended (using _"super()"_) from `FutureTask<T>` that takes as arguments `Callable<T>` ant `int`.
+there is one constructor that takes as arguments a callable operation(task) and the priority of that task and initialize them.
 
 
 **Class Methods:**
