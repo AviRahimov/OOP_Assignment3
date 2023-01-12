@@ -63,7 +63,7 @@ There is a constructor that receives a string name to set the name of the file.
 
 ## Timings
 in this part of the assignment one of the purposes of the same usage of 3,4,5 functions in `Ex2_1` is comparing running time and deciding which approach is better., 
-let's discuss running timings of those function and see what is the best approach, We performed four experiments, we will present the results and explain them<br/<br/>
+let's discuss running timings of those function and see what is the best approach, We performed four experiments, we will present the results and explain them<br/><br/>
 
 input: (n,seed,bound) = 100-100-1000
 ![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100-100-1000.jpg)<br/><br/>
