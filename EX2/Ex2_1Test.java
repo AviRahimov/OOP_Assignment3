@@ -1,11 +1,11 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
 import java.io.File;
-import java.nio.file.Paths;
-import java.util.*;
 
 /**
- * test class for Ex2_1
+ * test class for Ex2_1, the first two methods should run first just to assure that is no error in creating and deleting files
  * @author Lior Vinman, Avraham Rahimov
  * @version 13 January 2023
  */
@@ -15,6 +15,7 @@ class Ex2_1Test {
      * test method for createTextFiles() in Ex2_1
      */
     @Test
+    @Order(1)
     public void createTextFilesTest() {
         String[] arr = Ex2_1.createTextFiles(20000, 42, 100); // creating files
         for(String file : arr) {
@@ -34,9 +35,10 @@ class Ex2_1Test {
      * test method for deleteTextFiles() in Ex2_1
      */
     @Test
+    @Order(2)
     void deleteTextFilesTest() {
         String[] fileNames = Ex2_1.createTextFiles(20000, 42, 100);
-        EX2_1.deleteTextFiles(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
         for(String file : fileNames) {
             File f = new File(file);
             try {
@@ -54,9 +56,23 @@ class Ex2_1Test {
      */
     @Test
     void getNumOfLinesTest() {
-        String[] fileNames = Ex2_1.createTextFiles(10, 7, 2);
-        int lines = Ex2_1.getNumOfLines(fileNames);
+        int lines = 0;
+        String[] fileNames = null;
+
+        fileNames = Ex2_1.createTextFiles(10, 7, 2);
+        lines = Ex2_1.getNumOfLines(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
         Assert.assertEquals(12, lines);
+
+        fileNames = Ex2_1.createTextFiles(10, 15, 20);
+        lines = Ex2_1.getNumOfLines(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
+        Assert.assertEquals(110, lines);
+
+        fileNames = Ex2_1.createTextFiles(10, 6000, 35);
+        lines = Ex2_1.getNumOfLines(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
+        Assert.assertEquals(212, lines);
     }
 
     /**
@@ -64,9 +80,24 @@ class Ex2_1Test {
      */
     @Test
     void getNumOfLinesThreadsTest() {
-        String[] fileNames = Ex2_1.createTextFiles(10, 7, 2);
-        int lines = Ex2_1.getNumOfLinesThreads(fileNames);
+        int lines = 0;
+        String[] fileNames = null;
+
+        fileNames = Ex2_1.createTextFiles(10, 7, 2);
+        lines = Ex2_1.getNumOfLinesThreads(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
         Assert.assertEquals(12, lines);
+
+        fileNames = Ex2_1.createTextFiles(10, 15, 20);
+        lines = Ex2_1.getNumOfLinesThreads(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
+        Assert.assertEquals(110, lines);
+
+        fileNames = Ex2_1.createTextFiles(10, 6000, 35);
+        lines = Ex2_1.getNumOfLinesThreads(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
+        Assert.assertEquals(212, lines);
+
     }
 
     /**
@@ -74,8 +105,22 @@ class Ex2_1Test {
      */
     @Test
     void getNumOfLinesThreadPoolTest() {
-        String[] fileNames = Ex2_1.createTextFiles(10, 7, 2);
-        int lines = Ex2_1.getNumOfLinesThreadPool(fileNames);
+        int lines = 0;
+        String[] fileNames = null;
+
+        fileNames = Ex2_1.createTextFiles(10, 7, 2);
+        lines = Ex2_1.getNumOfLinesThreadPool(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
         Assert.assertEquals(12, lines);
+
+        fileNames = Ex2_1.createTextFiles(10, 15, 20);
+        lines = Ex2_1.getNumOfLinesThreadPool(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
+        Assert.assertEquals(110, lines);
+
+        fileNames = Ex2_1.createTextFiles(10, 6000, 35);
+        lines = Ex2_1.getNumOfLinesThreadPool(fileNames);
+        Ex2_1.deleteTextFiles(fileNames);
+        Assert.assertEquals(212, lines);
     }
 }
