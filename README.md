@@ -88,9 +88,9 @@ as we saw at the results, using only single thread(s) is the best option to get 
 <br/>
 as we can see at this diagram, the class `Ex2_1` uses the classes `Thread_NumOfLines` and `ThreadPool_NumOfLines`, in other words, there is a dependency between them. In addition, we can see that `ThreadPool_NumOfLines` implements the `Callable<V>` interface and the `Thread_NumOfLines` is extends (inheritance) JAVA's `Thread` which also is extending `Runnable` interface.
 
-*white arrows = one directional dependency
-*blue arrows = one directional inheritance
-*green arrows = one directional implementation
+* white arrows = one directional dependency
+* blue arrows = one directional inheritance
+* green arrows = one directional implementation
 
 ## Part B:
 
