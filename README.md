@@ -166,6 +166,6 @@ there is defultive constructor that is extended (using _"super()"_) from `Future
 
 
 ## How to use
-To clone this project all you need to do is to copy the [_project URL_](https://github.com/AviRahimov/OOP_Assignment2.git) to git bash and to change the current working directory to the location where you want the cloned directory.
+To clone this project all you need to do is to copy the [_project URL_](https://github.com/AviRahimov/OOP_Assignment3.git) to git bash and to change the current working directory to the location where you want the cloned directory.
 
-Using the command: `"git clone https://github.com/AviRahimov/OOP_Assignment2.git <location-to-clone>"`, then the cloning proccess will start.
+Using the command: `"git clone https://github.com/AviRahimov/OOP_Assignment3.git <location-to-clone>"`, then the cloning proccess will start.
