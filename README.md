@@ -115,6 +115,32 @@ We buikd two different constructors:
 
 ### CustomExecutor:
 
+**Class Fields:**
+
+1) `private static final PriorityBlockingQueue<Runnable> priorityBlockingQueue` - 
+2) `private static final int MinNumOfThreads` - the maximal number of threads.
+3) `private static final int MaxNumOfThreads` - the minimal number of threads.
+4) `private int LowestPriority` - the lowest priority, definied as 10.
+5) `private int[] TasksPriority` - array for holding priority for each task.
+6) `private int CurrentMaxPriority` - the current maximal priority.
+
+**Object's Constructor:**
+
+there is defultive constructor that is extended (using _"super()"_) from `ThreadPoolExecutor` that doesn't takes arguments.
+
+**Class Methods:**
+
+1) `public <V> FutureToRunAdapter submit(Task<V>)` - converts from `Future` to `Runnable`.
+2) `public <V> Future submit(Callable<V>, TaskType)` - creates a new task.
+3) `public <V> Future<V> submit(Callable<V>)` - submits a new task.
+4) `public void beforeExecute(Thread, Runnable)` - updates priority of the task before executing it.
+5) `public boolean equals(Object)` - checking if two objects are equal.
+6) `public int hashCode()` - returning the hash code of the current object.
+7) `public int getCurrentMax()` - standard _"getter()"_ for 6'th field. 
+8) `public void gracefullyTerminate()` - used to shut down the thread pool.
+9) `public String toString()` - standard _"toString()"_ method.
+
+
 ### FutureToRunAdapter:
 
 ## UML-Diagram:
