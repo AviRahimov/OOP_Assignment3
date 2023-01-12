@@ -163,7 +163,7 @@ there is one constructor that takes as arguments a callable operation(task) and 
 2) `public boolean equals(Object)` - checking if two objects are equal.
 3) `puvlic string toString()` - standard _"toString()"_ method.
 4) `public int hashCode()` - returning the hash code of the current object.
-5) `public int compareTo(FutureToRunAdapter)` - checking if priority of two objects are the same.
+5) `public int compareTo(CallToRunAdapter)` - checking if priority of two objects are the same.
 
 ## UML-Diagram:
 ![UML_Part_B](https://user-images.githubusercontent.com/98770917/211952123-c4a876db-3377-402f-95fa-3526a121d7ca.png)
