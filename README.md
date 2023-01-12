@@ -68,16 +68,21 @@ let's discuss running timings of those function and see what is the best approac
 input: (n,seed,bound) = 100-100-1000
 ![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100-100-1000.jpg)<br/><br/>
 input: (n,seed,bound) = 1000-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/1000-100-1000.jpg)<br/><br/>
+![Second_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/1000-100-1000.jpg)<br/><br/>
 input: (n,seed,bound) = 10000-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/10000-100-1000.jpg)<br/><br/>
+![Third_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/10000-100-1000.jpg)<br/><br/>
 input: (n,seed,bound) = 100000-100-1000
-![First_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100000-100-1000.jpg)<br/>
+![Fourth_Expiriment](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/100000-100-1000.jpg)<br/>
 
 as we can see, using `public static int getNumOfLinesThreads(String[])` is the best option, because of the lowers running times in all four expiriments. what about the second and the third places, we don't have a decisive answer - because at 100,000 files the threadpool is the worst option but in 100 files regular calculation is the worst.
 
 ### Explenations:
 as we saw at the results, using only single thread(s) is the best option to get lowest running times - the reason for that may be that if the system (JVM) using only one thread each time to calculate so every thread has more system reasurses such as CPU speed (in Ghz) or more Ram memmory available (in GB) and thus every thread can "finish his job" faster, what about threadpool and manually calculating (without any threads) - if we'll look at the 100,000 files results there we'll see that the threadpool is the worst option but if we'll loot at the 100 files results we'll see that the manuall option is the worst, the reason for that may be that if we have too many files (tasks) and too many threads that are "doing their jobs" simulltanly - so its logical that every thread will get less system resources (because ours home-computers has limited resoures, at the end...) and the reasong for the changing (that threadpool is better in one case but no the best at other case) is that the running time may depend on the diffculty to calculate many times at the same time and as we can see at some cases manuall is better than threadpool.  
+
+## UML-Diagram:
+![UML_PART_A](https://github.com/AviRahimov/OOP_Assignment3/blob/master/EX2/pictures/UML_PartA.png)
+<br/>
+as we can see at this diagram, the class `Ex2_1` uses the classes `Thread_NumOfLines` and `ThreadPool_NumOfLines`, in other words, there is a dependency between them. In addition, we can see that `ThreadPool_NumOfLines` implements the `Callable<V>` interface and the `Thread_NumOfLines` is extends (inheritance) JAVA's `Thread` which also is extending `Runnable` interface.
 
 ## Part B:
 
