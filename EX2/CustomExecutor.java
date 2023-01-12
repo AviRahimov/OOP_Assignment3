@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.*;
 
 /**
@@ -6,44 +8,32 @@ import java.util.concurrent.*;
  * Callable<V> and a Type, passed as arguments.
  */
 public class CustomExecutor extends ThreadPoolExecutor{
-    private static final PriorityBlockingQueue<Runnable> task_queue = new PriorityBlockingQueue<>();
+    private static final PriorityBlockingQueue<Runnable> priorityBlockingQueue = new PriorityBlockingQueue<>();
     private static final int MinNumOfThreads = (Runtime.getRuntime().availableProcessors())/2;
     private static final int MaxNumOfThreads = (Runtime.getRuntime().availableProcessors())-1;
+    private int LowestPriority = 10;
+    private int [] TasksPriority;
     private int CurrentMaxPriority;
     public CustomExecutor(){
-        super(MinNumOfThreads, MaxNumOfThreads, 300, TimeUnit.MILLISECONDS, task_queue);
+        super(MinNumOfThreads, MaxNumOfThreads, 300, TimeUnit.MILLISECONDS, priorityBlockingQueue);
+        TasksPriority = new int[LowestPriority];
     }
-
     /**
-     *
-     * @return the maximum priority in the queue in O(1) time & space
-     * complexity.
-     */
-    public int getCurrentMax(){
-        return this.CurrentMaxPriority;
-    }
-
-    /**
-     * After finishing of all tasks submitted to the executor, or if an exception is thrown, terminate
-     * the executor.
-     */
-    public void gracefullyTerminate(){
-        super.shutdown();
-    }
-
-    /**
-     *
-     * @param callable representing the task that the executor need to execute.
+     * @param task representing the task that the executor need to execute.
+     * @param <V>      a generic data type that will be return at the end of the task submission
      * @return Future data type that hold the result of the submission method and, when we write Future.get() it will
      * return the output of the result.
-     * @param <V> a generic data type that will be return at the end of the task submission
      */
-    public <V> Future<V> submit(Task<V> task){
-        if (task == null){
-            throw new NullPointerException();
+    public <V> FutureToRunAdapter submit(Task<V> task){
+        try {
+            TasksPriority[task.getPrior()-1]++;
+            FutureToRunAdapter futureToRunAdapter = new FutureToRunAdapter(task, task.getPrior());
+            super.execute(futureToRunAdapter);
+            return futureToRunAdapter;
         }
-        this.CurrentMaxPriority = task.getPrior();
-        return super.submit(task);
+        catch (Exception NullPointerException){
+            throw NullPointerException;
+        }
     }
 
     /**
@@ -53,7 +43,7 @@ public class CustomExecutor extends ThreadPoolExecutor{
      */
     public <V> Future submit(Callable<V> callable, TaskType taskType){
 
-        return super.submit(Task.createTask(callable, taskType));
+        return this.submit(Task.createTask(callable, taskType));
     }
 
     /**
@@ -65,5 +55,66 @@ public class CustomExecutor extends ThreadPoolExecutor{
     public <V> Future<V> submit(Callable<V> callable){
         return this.submit(new Task<>(callable));
     }
+    @Override
+    public void beforeExecute(Thread thread, Runnable runnable){
+        try {
+            TasksPriority[((FutureToRunAdapter<?>)runnable).getPrior()-1]--;
+        } catch (Exception e) {
+            throw new NullPointerException("You are trying to access null object!!!");
+        }
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomExecutor that = (CustomExecutor) o;
+        return LowestPriority == that.LowestPriority && CurrentMaxPriority == that.CurrentMaxPriority && Arrays.equals(TasksPriority, that.TasksPriority);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(LowestPriority, CurrentMaxPriority);
+        result = 31 * result + Arrays.hashCode(TasksPriority);
+        return result;
+    }
+
+    /**
+     *
+     * @return the maximum priority in the queue in O(1) time & space
+     * complexity.
+     */
+    public int getCurrentMax(){
+//        for(int i : TasksPriority){
+//            if(i>0)
+//                return (i);
+//        }
+        for (int i = 0; i < LowestPriority; i++) {
+            if(this.TasksPriority[i]>0)
+                return i+1;
+        }
+        return LowestPriority;
+    }
+
+    /**
+     * After finishing of all tasks submitted to the executor, or if an exception is thrown, terminate
+     * the executor.
+     */
+    public void gracefullyTerminate(){
+        try {
+            super.shutdown();
+            super.awaitTermination(this.getKeepAliveTime(TimeUnit.MILLISECONDS)*TasksPriority.length, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        super.shutdown();
+    }
+
+    @Override
+    public String toString() {
+        return "CustomExecutor{" +
+                ", TasksPriority=" + Arrays.toString(TasksPriority) +
+                ", CurrentMaxPriority=" + CurrentMaxPriority +
+                '}';
+    }
 }

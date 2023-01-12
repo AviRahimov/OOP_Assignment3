@@ -5,6 +5,15 @@ import java.util.concurrent.*;
 public class Tests {
     public static final Logger logger = LoggerFactory.getLogger(Tests.class);
 
+    private static Object call() {
+        int sum = 0;
+        for (int j = 1; j <= 10; j++) {
+
+            sum += j;
+        }
+        return sum;
+    }
+
     @Test
     public void partialTest() {
         CustomExecutor customExecutor = new CustomExecutor();
@@ -52,12 +61,12 @@ public class Tests {
 
      public static final Logger log = LoggerFactory.getLogger(Tests.class);
         /**
-         * check if the queue add by priority,
-         * set core and max to be 1, because we need
-         * that task get in the workqueue.
+         * checking if the queue add by priority,
+         * set the core and max value of processors to be 1, because we need
+         * that task get in the work queue.
          *
-         * Print - print the priorities og the queue's tasks
-         * by the order in the queue
+         * Print - print the priorities or the queue's tasks
+         * by their order in the queue.
          */
         @Test
         public void partialTest2() {
@@ -71,15 +80,8 @@ public class Tests {
                 };
 
                 var reverseTask1 = customExecutor.submit(testIO, TaskType.IO);
-                var task = Task.createTask(()->{
-                    int sum = 0;
-                    for (int j = 1; j <= 10; j++) {
-
-                        sum += j;
-                    }
-                    return sum;
-                }, TaskType.COMPUTATIONAL);
-                var sumTask = customExecutor.submit(task);
+                var task2 = Task.createTask(Tests::call, TaskType.COMPUTATIONAL);
+                var sumTask = customExecutor.submit(task2);
                 logger.info(()-> "Current maximum priority = " +
                         customExecutor.getCurrentMax());
 
@@ -94,7 +96,7 @@ public class Tests {
                     return sb.reverse().toString();
                 };
 
-                var testt = customExecutor.submit(testIO2, TaskType.IO);
+                var test = customExecutor.submit(testIO2, TaskType.IO);
                 logger.info(()-> "Current maximum priority = " +
                         customExecutor.getCurrentMax());
 
@@ -104,7 +106,7 @@ public class Tests {
                 System.out.println(customExecutor.toString());
 
                 try {
-                    get1 = (String) testt.get();
+                    get1 = (String) test.get();
                     get2 = (double) testMath.get();
                     get3 = (int) sumTask.get();
                 } catch (InterruptedException | ExecutionException e) {
