@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.nio.file.*; // importing Path and Paths
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * this class is a helper-class that extends JAVA's Thread class
@@ -17,14 +18,14 @@ public class Thread_NumOfLines extends Thread {
     /**
      * this field is representing the total lines of all instances
      */
-    private static int total;
+    private int total;
 
     /**
      * standard get() method that returns total field
      * @return total lines of all instances
      */
     public int getTotal() {
-        return total;
+        return this.total;
     }
 
     /**
@@ -33,6 +34,7 @@ public class Thread_NumOfLines extends Thread {
      */
     public Thread_NumOfLines(String fileName) {
         this.name = fileName;
+        this.total = 0;
     }
 
     /**
@@ -43,7 +45,7 @@ public class Thread_NumOfLines extends Thread {
         Path file = null;
         try {
             file = Paths.get(this.name);
-            total += Files.lines(file).count();
+            total = Math.toIntExact(Files.lines(file).count());
         } catch (InvalidPathException | IOException | SecurityException e) {
             e.printStackTrace();
         }
